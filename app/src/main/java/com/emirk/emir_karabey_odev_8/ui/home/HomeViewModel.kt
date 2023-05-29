@@ -3,8 +3,7 @@ package com.emirk.emir_karabey_odev_8.ui.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.emirk.emir_karabey_odev_8.common.Resource
-import com.emirk.emir_karabey_odev_8.domain.ui_model.Person
-import com.emirk.emir_karabey_odev_8.domain.use_case.AddPersonUseCase
+import com.emirk.emir_karabey_odev_8.domain.use_case.GetPersonByGroupUseCase
 import com.emirk.emir_karabey_odev_8.domain.use_case.GetPersonUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -18,13 +17,13 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val getPersonUseCase: GetPersonUseCase,
-    private val addPersonUseCase: AddPersonUseCase
+    private val getPersonByGroupUseCase: GetPersonByGroupUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(PersonUiState())
     val uiState: StateFlow<PersonUiState> = _uiState.asStateFlow()
 
-    fun getFavorites() = viewModelScope.launch(Dispatchers.IO) {
+    fun getPersons() = viewModelScope.launch(Dispatchers.IO) {
         getPersonUseCase.invoke().collect { result ->
             when (result) {
                 is Resource.Error -> {
@@ -46,8 +45,26 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun addPerson(person: Person) = viewModelScope.launch {
-        addPersonUseCase.invoke(person = person)
+    fun getPersonsByGroup(personGroup: String) = viewModelScope.launch(Dispatchers.IO) {
+        getPersonByGroupUseCase.invoke(personGroup).collect { result ->
+            when (result) {
+                is Resource.Error -> {
+                    _uiState.update { state ->
+                        state.copy(userMessage = result.message)
+                    }
+                }
+                is Resource.Loading -> {
+                    _uiState.update { state ->
+                        state.copy(isLoading = true)
+                    }
+                }
+                is Resource.Success -> {
+                    _uiState.update { state ->
+                        state.copy(person = result.data, isLoading = false)
+                    }
+                }
+            }
+        }
     }
 
     fun userMessageShown() {

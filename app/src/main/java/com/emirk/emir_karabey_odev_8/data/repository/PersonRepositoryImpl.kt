@@ -11,7 +11,7 @@ class PersonRepositoryImpl @Inject constructor(
     private val personDao: PersonDao
 ) : PersonRepository {
     override suspend fun getPersons(): List<Person> {
-        return personDao.getAllTracks().map {
+        return personDao.getAllPerson().map {
             it.toDomain()
         }
     }
@@ -22,5 +22,11 @@ class PersonRepositoryImpl @Inject constructor(
 
     override suspend fun deletePerson(personId: Int) {
         personDao.deletePerson(personId = personId)
+    }
+
+    override suspend fun getPersonsByGroup(personGroup: String): List<Person> {
+        return personDao.getPersonsByGroup(personGroup = personGroup).map {
+            it.toDomain()
+        }
     }
 }

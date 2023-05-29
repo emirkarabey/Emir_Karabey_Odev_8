@@ -18,5 +18,9 @@
         android:id="@+id/addPersonFragment"
         android:name="com.emirk.emir_karabey_odev_8.ui.add_person.AddPersonFragment"
         android:label="fragment_add_person"
-        tools:layout="@layout/fragment_add_person" />
+        tools:layout="@layout/fragment_add_person" >
+        <action
+            android:id="@+id/action_addPersonFragment_to_nav_home"
+            app:destination="@id/nav_home" />
+    </fragment>
 </navigation>

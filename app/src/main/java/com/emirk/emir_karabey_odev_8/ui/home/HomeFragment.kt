@@ -26,7 +26,7 @@ class HomeFragment : Fragment() {
 
     private val viewModel: HomeViewModel by viewModels()
     private lateinit var adapter: PersonAdapter
-
+    var parameter: String? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -34,14 +34,23 @@ class HomeFragment : Fragment() {
     ): View {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        parameter = arguments?.getString("parameter")
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getFavorites()
         initRecyclerViewAdapters()
         collectEvent()
+        if (parameter.isNullOrEmpty()){
+            viewModel.getPersons()
+        }
+        else if(parameter.equals("Hepsi")){
+            viewModel.getPersons()
+        }else{
+            viewModel.getPersonsByGroup(parameter!!)
+        }
+
         binding.fab.setOnClickListener {
             findNavController().navigate(HomeFragmentDirections.actionNavHomeToAddPersonFragment())
         }

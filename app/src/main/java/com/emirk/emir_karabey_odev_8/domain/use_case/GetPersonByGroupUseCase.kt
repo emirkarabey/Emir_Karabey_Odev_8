@@ -9,14 +9,15 @@ import kotlinx.coroutines.flow.flow
 import java.io.IOException
 import javax.inject.Inject
 
-class GetPersonUseCase @Inject constructor(
+class GetPersonByGroupUseCase @Inject constructor(
     private val repository: PersonRepository
 ) {
     operator fun invoke(
+        personGroup: String
     ): Flow<Resource<List<Person>>> = flow {
         try {
             emit(Resource.Loading())
-            val persons = repository.getPersons()
+            val persons = repository.getPersonsByGroup(personGroup)
             emit(Resource.Success(data = persons))
         } catch (e: IOException) {
             emit(Resource.Error(message = e.localizedMessage))

@@ -1,14 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.add_person.AddPersonFragment">
+    tools:context=".ui.add_person.AddPersonFragment"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:layout_margin="10dp"
+    android:layout_gravity="center">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+   <EditText
+       android:id="@+id/etPersonName"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:hint="Ad Soyad..."/>
+
+    <EditText
+        android:id="@+id/etGroupName"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="add person" />
+        android:layout_height="wrap_content"
+        android:hint="Group Name.."/>
 
-</FrameLayout>
+    <EditText
+        android:id="@+id/etPhoneNo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Telefon numarası giriniz..."/>
+
+    <EditText
+        android:id="@+id/etAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Adres giriniz..."/>
+
+    <Button
+        android:id="@+id/btnAdd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ekle"/>
+
+</LinearLayout>

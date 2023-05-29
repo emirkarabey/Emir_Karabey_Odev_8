@@ -8,18 +8,15 @@
     <fragment
         android:id="@+id/nav_home"
         android:name="com.emirk.emir_karabey_odev_8.ui.home.HomeFragment"
-        android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
-
+        android:label="@string/menu_aile"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_nav_home_to_addPersonFragment"
+            app:destination="@id/addPersonFragment" />
+    </fragment>
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.emirk.emir_karabey_odev_8.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
-
-    <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.emirk.emir_karabey_odev_8.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/addPersonFragment"
+        android:name="com.emirk.emir_karabey_odev_8.ui.add_person.AddPersonFragment"
+        android:label="fragment_add_person"
+        tools:layout="@layout/fragment_add_person" />
 </navigation>

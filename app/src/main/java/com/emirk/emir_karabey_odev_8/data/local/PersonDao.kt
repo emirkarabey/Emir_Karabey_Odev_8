@@ -18,5 +18,8 @@ interface PersonDao {
     suspend fun deletePerson(personId: Int)
 
     @Query("SELECT * FROM person ORDER BY uid DESC")
-    fun getAllTracks(): List<PersonEntity>
+    fun getAllPerson(): List<PersonEntity>
+
+    @Query("SELECT * FROM person WHERE groupName = :personGroup ORDER BY uid DESC")
+    fun getPersonsByGroup(personGroup: String): List<PersonEntity>
 }

@@ -14,4 +14,13 @@
     <string name="menu_hali_saha">Halı Saha</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="spinner_items">
+        <item>Aile</item>
+        <item>Okul</item>
+        <item>Arkadaşlar</item>
+        <item>Halı Saha</item>
+        <item>İş</item>
+        <!-- Daha fazla seçenek eklenebilir -->
+    </string-array>
 </resources>

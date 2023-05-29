@@ -13,24 +13,27 @@
        android:id="@+id/etPersonName"
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
+       android:padding="8dp"
        android:hint="Ad Soyad..."/>
 
-    <EditText
-        android:id="@+id/etGroupName"
+    <Spinner
+        android:id="@+id/spinnerGroup"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Group Name.."/>
+        android:layout_height="wrap_content" />
+
 
     <EditText
         android:id="@+id/etPhoneNo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="8dp"
         android:hint="Telefon numarası giriniz..."/>
 
     <EditText
         android:id="@+id/etAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="8dp"
         android:hint="Adres giriniz..."/>
 
     <Button

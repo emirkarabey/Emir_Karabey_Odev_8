@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.emirk.emir_karabey_odev_8.R
 import com.emirk.emir_karabey_odev_8.databinding.FragmentAddPersonBinding
 import com.emirk.emir_karabey_odev_8.domain.ui_model.Person
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -42,6 +43,8 @@ class AddPersonFragment : Fragment() {
                 personAddress = binding.etAddress.text.toString()
             )
             viewModel.addPerson(person)
+            val snackbar = Snackbar.make(requireView(), "Kayıt başarılı!", Snackbar.LENGTH_SHORT)
+            snackbar.show()
             findNavController().navigate(AddPersonFragmentDirections.actionAddPersonFragmentToNavHome())
         }
     }

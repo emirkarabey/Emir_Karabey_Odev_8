@@ -12,6 +12,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.emirk.emir_karabey_odev_8.data.local.entity.PersonEntity
 import com.emirk.emir_karabey_odev_8.databinding.FragmentDetailBinding
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -35,8 +36,10 @@ class DetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        parameter?.let { viewModel.getPersonById(it) }
-        collectEvent()
+        parameter?.let {
+            viewModel.getPersonById(it)
+            collectEvent()
+        }
 
         binding.btnUpdate.setOnClickListener {
             val person = PersonEntity(
@@ -47,8 +50,17 @@ class DetailFragment : Fragment() {
                 personAddress = binding.etAddress.text.toString()
             )
             viewModel.updatePerson(person)
-            val action = DetailFragmentDirections.actionDetailFragmentSelf(binding.etPersonName.text.toString())
+            val snackbar = Snackbar.make(requireView(), "Kişi Güncellendi!", Snackbar.LENGTH_SHORT)
+            snackbar.show()
+            val action = DetailFragmentDirections.actionDetailFragmentToNavHome()
             findNavController().navigate(action)
+        }
+
+        binding.btnDelete.setOnClickListener {
+            viewModel.deletePerson(personId!!)
+            val snackbar = Snackbar.make(requireView(), "Kişi Silindi!", Snackbar.LENGTH_SHORT)
+            snackbar.show()
+            findNavController().navigate(DetailFragmentDirections.actionDetailFragmentToNavHome())
         }
     }
 
@@ -57,12 +69,16 @@ class DetailFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { uiState ->
                     if (uiState.isLoading) {
+                        binding.linearLayout.visibility = View.GONE
+                        binding.progressBar.visibility = View.VISIBLE
                     } else {
                         binding.etPersonName.setText(uiState.person!!.personName)
                         binding.etGroupName.setText(uiState.person.groupName)
                         binding.etPhoneNo.setText(uiState.person.personPhoneNo)
                         binding.etAddress.setText(uiState.person.personAddress)
                         personId = uiState.person.uid
+                        binding.linearLayout.visibility = View.VISIBLE
+                        binding.progressBar.visibility = View.GONE
                     }
                 }
             }

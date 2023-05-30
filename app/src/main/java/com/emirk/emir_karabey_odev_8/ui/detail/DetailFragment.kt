@@ -9,6 +9,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
+import com.emirk.emir_karabey_odev_8.data.local.entity.PersonEntity
 import com.emirk.emir_karabey_odev_8.databinding.FragmentDetailBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -21,6 +23,7 @@ class DetailFragment : Fragment() {
 
     private val viewModel: DetailViewModel by viewModels()
     var parameter: String? = null
+    var personId: Int? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -34,6 +37,19 @@ class DetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         parameter?.let { viewModel.getPersonById(it) }
         collectEvent()
+
+        binding.btnUpdate.setOnClickListener {
+            val person = PersonEntity(
+                uid = personId!!,
+                groupName = binding.etGroupName.text.toString(),
+                personName = binding.etPersonName.text.toString(),
+                personPhoneNo = binding.etPhoneNo.text.toString(),
+                personAddress = binding.etAddress.text.toString()
+            )
+            viewModel.updatePerson(person)
+            val action = DetailFragmentDirections.actionDetailFragmentSelf(binding.etPersonName.text.toString())
+            findNavController().navigate(action)
+        }
     }
 
     private fun collectEvent() = binding.apply {
@@ -46,6 +62,7 @@ class DetailFragment : Fragment() {
                         binding.etGroupName.setText(uiState.person.groupName)
                         binding.etPhoneNo.setText(uiState.person.personPhoneNo)
                         binding.etAddress.setText(uiState.person.personAddress)
+                        personId = uiState.person.uid
                     }
                 }
             }

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.emirk.emir_karabey_odev_8.common.Resource
 import com.emirk.emir_karabey_odev_8.domain.use_case.GetPersonByGroupUseCase
+import com.emirk.emir_karabey_odev_8.domain.use_case.GetPersonByNameUseCase
 import com.emirk.emir_karabey_odev_8.domain.use_case.GetPersonUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -17,7 +18,8 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val getPersonUseCase: GetPersonUseCase,
-    private val getPersonByGroupUseCase: GetPersonByGroupUseCase
+    private val getPersonByGroupUseCase: GetPersonByGroupUseCase,
+    private val getPersonByNameUseCase: GetPersonByNameUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(PersonUiState())
@@ -47,6 +49,28 @@ class HomeViewModel @Inject constructor(
 
     fun getPersonsByGroup(personGroup: String) = viewModelScope.launch(Dispatchers.IO) {
         getPersonByGroupUseCase.invoke(personGroup).collect { result ->
+            when (result) {
+                is Resource.Error -> {
+                    _uiState.update { state ->
+                        state.copy(userMessage = result.message)
+                    }
+                }
+                is Resource.Loading -> {
+                    _uiState.update { state ->
+                        state.copy(isLoading = true)
+                    }
+                }
+                is Resource.Success -> {
+                    _uiState.update { state ->
+                        state.copy(person = result.data, isLoading = false)
+                    }
+                }
+            }
+        }
+    }
+
+    fun getPersonsByName(personName: String) = viewModelScope.launch(Dispatchers.IO) {
+        getPersonByNameUseCase.invoke(personName).collect { result ->
             when (result) {
                 is Resource.Error -> {
                     _uiState.update { state ->

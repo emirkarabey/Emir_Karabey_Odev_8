@@ -3,7 +3,9 @@ package com.emirk.emir_karabey_odev_8.ui.detail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.emirk.emir_karabey_odev_8.common.Resource
+import com.emirk.emir_karabey_odev_8.data.local.entity.PersonEntity
 import com.emirk.emir_karabey_odev_8.domain.use_case.GetPersonDetailUseCase
+import com.emirk.emir_karabey_odev_8.domain.use_case.UpdatePersonUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailViewModel @Inject constructor(
-    private val getPersonDetailUseCase: GetPersonDetailUseCase
+    private val getPersonDetailUseCase: GetPersonDetailUseCase,
+    private val updatePersonUseCase: UpdatePersonUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(PersonDetailUiState())
@@ -41,5 +44,9 @@ class DetailViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun updatePerson(personEntity: PersonEntity) = viewModelScope.launch {
+        updatePersonUseCase.invoke(personEntity)
     }
 }

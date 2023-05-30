@@ -29,4 +29,10 @@ class PersonRepositoryImpl @Inject constructor(
             it.toDomain()
         }
     }
+
+    override suspend fun getPersonsByName(personName: String): List<Person> {
+        return personDao.getPersonsByName(personName = personName).map {
+            it.toDomain()
+        }
+    }
 }

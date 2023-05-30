@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -44,14 +45,14 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerViewAdapters()
         collectEvent()
-        if (parameter.isNullOrEmpty()){
+        setupSearchView()
+        if (parameter.isNullOrEmpty()) {
             viewModel.getPersons()
             binding.pageName.text = "Hepsi"
-        }
-        else if(parameter.equals("Hepsi")){
+        } else if (parameter.equals("Hepsi")) {
             viewModel.getPersons()
             binding.pageName.text = parameter
-        }else{
+        } else {
             viewModel.getPersonsByGroup(parameter!!)
             binding.pageName.text = parameter
         }
@@ -59,6 +60,24 @@ class HomeFragment : Fragment() {
         binding.fab.setOnClickListener {
             findNavController().navigate(HomeFragmentDirections.actionNavHomeToAddPersonFragment())
         }
+    }
+
+    private fun setupSearchView() = binding.searchView.setOnQueryTextListener(object :
+        SearchView.OnQueryTextListener {
+        override fun onQueryTextSubmit(query: String?): Boolean {
+            if (query != null) {
+                searchPerson(query)
+            }
+            return false
+        }
+
+        override fun onQueryTextChange(newText: String?): Boolean {
+            return false
+        }
+    })
+
+    private fun searchPerson(searchText: String) {
+        viewModel.getPersonsByName(searchText)
     }
 
     private fun initRecyclerViewAdapters() {

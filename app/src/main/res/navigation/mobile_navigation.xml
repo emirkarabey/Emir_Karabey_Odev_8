@@ -39,5 +39,10 @@
             app:destination="@id/detailFragment"
             app:popUpTo="@id/detailFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_detailFragment_to_nav_home"
+            app:destination="@id/nav_home"
+            app:popUpTo="@id/detailFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

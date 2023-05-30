@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_nav_home_to_addPersonFragment"
             app:destination="@id/addPersonFragment" />
+        <action
+            android:id="@+id/action_nav_home_to_detailFragment"
+            app:destination="@id/detailFragment" />
     </fragment>
     <fragment
         android:id="@+id/addPersonFragment"
@@ -22,5 +25,14 @@
         <action
             android:id="@+id/action_addPersonFragment_to_nav_home"
             app:destination="@id/nav_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.emirk.emir_karabey_odev_8.ui.detail.DetailFragment"
+        android:label="fragment_detail"
+        tools:layout="@layout/fragment_detail" >
+        <argument
+            android:name="personName"
+            app:argType="string" />
     </fragment>
 </navigation>

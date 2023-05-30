@@ -83,7 +83,8 @@ class HomeFragment : Fragment() {
     private fun initRecyclerViewAdapters() {
         adapter = PersonAdapter(object : PersonItemClickListener {
             override fun onItemClick(person: Person) {
-                TODO("Not yet implemented")
+                val action = HomeFragmentDirections.actionNavHomeToDetailFragment(person.personName)
+                findNavController().navigate(action)
             }
         })
         setupRecyclerViews()

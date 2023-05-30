@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/nav_home"
         android:name="com.emirk.emir_karabey_odev_8.ui.home.HomeFragment"
-        android:label="@string/menu_aile"
+        android:label="@string/menu_kisilerim"
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_nav_home_to_addPersonFragment"

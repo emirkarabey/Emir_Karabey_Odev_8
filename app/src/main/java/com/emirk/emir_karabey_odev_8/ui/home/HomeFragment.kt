@@ -1,5 +1,6 @@
 package com.emirk.emir_karabey_odev_8.ui.home
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -38,17 +39,21 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerViewAdapters()
         collectEvent()
         if (parameter.isNullOrEmpty()){
             viewModel.getPersons()
+            binding.pageName.text = "Hepsi"
         }
         else if(parameter.equals("Hepsi")){
             viewModel.getPersons()
+            binding.pageName.text = parameter
         }else{
             viewModel.getPersonsByGroup(parameter!!)
+            binding.pageName.text = parameter
         }
 
         binding.fab.setOnClickListener {

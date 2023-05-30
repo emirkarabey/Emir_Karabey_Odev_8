@@ -9,5 +9,6 @@ interface PersonRepository {
     suspend fun deletePerson(personId: Int)
     suspend fun getPersonsByGroup(personGroup: String): List<Person>
     suspend fun getPersonsByName(personName: String): List<Person>
-    suspend fun getPersonDetail(personName: String): Person
+    suspend fun getPersonDetail(personName: String): PersonEntity
+    suspend fun updatePerson(personEntity: PersonEntity)
 }

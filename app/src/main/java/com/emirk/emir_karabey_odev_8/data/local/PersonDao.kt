@@ -25,4 +25,7 @@ interface PersonDao {
 
     @Query("SELECT * FROM person WHERE personName = :personName ORDER BY uid DESC")
     fun getPersonsByName(personName: String): List<PersonEntity>
+
+    @Query("SELECT * FROM person WHERE personName = :personName ORDER BY uid DESC")
+    fun getPersonDetail(personName: String): PersonEntity
 }

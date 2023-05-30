@@ -13,5 +13,9 @@ class PersonViewHolder(
         tvGroupName.text = person.groupName
         tvPhoneNo.text = person.personPhoneNo
         tvAddress.text = person.personAddress
+
+        itemView.setOnClickListener {
+            personItemClickListener.onItemClick(person = person)
+        }
     }
 }

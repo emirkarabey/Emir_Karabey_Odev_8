@@ -35,4 +35,8 @@ class PersonRepositoryImpl @Inject constructor(
             it.toDomain()
         }
     }
+
+    override suspend fun getPersonDetail(personName: String): Person {
+        return personDao.getPersonDetail(personName = personName).toDomain()
+    }
 }

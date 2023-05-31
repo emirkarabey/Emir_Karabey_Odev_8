@@ -31,15 +31,15 @@ class DetailFragment : Fragment() {
     ): View {
         _binding = FragmentDetailBinding.inflate(inflater, container, false)
         parameter = arguments?.getString("personName")
+        parameter?.let {
+            viewModel.getPersonById(it)
+            collectEvent()
+        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        parameter?.let {
-            viewModel.getPersonById(it)
-            collectEvent()
-        }
 
         binding.btnUpdate.setOnClickListener {
             val person = PersonEntity(

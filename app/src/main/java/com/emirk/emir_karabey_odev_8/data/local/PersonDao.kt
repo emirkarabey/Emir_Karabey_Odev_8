@@ -17,7 +17,7 @@ interface PersonDao {
     @Query("DELETE FROM person WHERE uid=:personId")
     suspend fun deletePerson(personId: Int)
 
-    @Query("SELECT * FROM person ORDER BY uid DESC")
+    @Query("SELECT * FROM person ORDER BY uid DESC LIMIT 10")
     fun getAllPerson(): List<PersonEntity>
 
     @Query("SELECT * FROM person WHERE groupName = :personGroup ORDER BY uid DESC")
